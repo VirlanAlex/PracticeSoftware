@@ -17,9 +17,7 @@ public class BrandBETest {
 
         // Pasul 1: Cream un Brand
         System.out.println("STEP 1: CREATE NEW BRAND");
-
         RequestBrandModel requestBody = new RequestBrandModel("Brand", "Testing1");
-
         request.body(requestBody);
         Response response = request.post("/brands");
         System.out.println(response.getStatusLine());
@@ -29,10 +27,50 @@ public class BrandBETest {
 
         // Pasul 2: Verificam ca s-a creat brandul
         System.out.println("STEP 2: CHECK BRAND REQUEST");
-
         Response response2 = request.get("/brands/"+ responseBody.getId());
         System.out.println(response2.getStatusLine());
         response2.body().prettyPrint();
         Assert.assertEquals(response2.getStatusCode(), 200);
+
+        // Pasul 3: Modificam un brand
+        System.out.println("STEP 3: UPDATE BRANDS");
+        RequestBrandModel requestBody3= new RequestBrandModel("Alex", "TestNG");
+        request.body(requestBody3);
+        Response response3 = request.put("/brands/"+ responseBody.getId());
+        System.out.println(response3.getStatusLine());
+        response3.body().prettyPrint();
+        Assert.assertEquals(response3.getStatusCode(), 200);
+
+         // Pasul 4: Verificam ca s-a modificat brandul
+        System.out.println("STEP 4: CHECK BRAND REQUEST");
+        Response response4 = request.put("/brands/"+ responseBody.getId());
+        System.out.println(response4.getStatusLine());
+        response4.body().prettyPrint();
+        Assert.assertEquals(response4.getStatusCode(), 200);
+
+        // Pasul 5: Ne logam cu ADMIN creat
+        System.out.println("STEP 5: LOGIN USER ADMIN REQUEST");
+        RequestUserLoginModel requestBody5= new RequestUserLoginModel("admin@practicesoftwaretesting.com", "welcome01");
+        request.body(requestBody5);
+        Response response5 = request.post("users/login");
+        response5.body().prettyPrint();
+        ResponseUserLoginModel responseBody5 = response5.getBody().as(ResponseUserLoginModel.class);
+        Assert.assertEquals(response5.getStatusCode(), 200);
+
+        // Pasul 6: Stergem brandul
+        System.out.println("STEP 6: DELETE BRAND REQUEST");
+        request.header("Authorization", "Bearer" + responseBody5.getAccess_token());
+        Response response6 = request.delete("/brands/"+ responseBody.getId());
+        System.out.println(response6.getStatusLine());
+        response6.body().prettyPrint();
+        Assert.assertEquals(response6.getStatusCode(), 204);
+
+        // Pasul 7: Verificam ca brandul s-a sters
+        System.out.println("STEP 7: CHECK BRAND REQUEST");
+        Response response7 = request.post("/brands/"+ responseBody.getId());
+        System.out.println(response7.getStatusLine());
+        response7.body().prettyPrint();
+        Assert.assertEquals(response7.getStatusCode(), 404);
+
     }
 }
