@@ -67,7 +67,7 @@ public class BrandBETest {
 
         // Pasul 7: Verificam ca brandul s-a sters
         System.out.println("STEP 7: CHECK BRAND REQUEST");
-        Response response7 = request.post("/brands/"+ responseBody.getId());
+        Response response7 = request.get("/brands/"+ responseBody.getId());
         System.out.println(response7.getStatusLine());
         response7.body().prettyPrint();
         Assert.assertEquals(response7.getStatusCode(), 404);
