@@ -1,9 +1,7 @@
 package tests;
 
-import io.restassured.response.Response;
 import models.RequestUserLoginModel;
 import models.ResponseUserLoginModel;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import services.ReportService;
 import services.UserService;

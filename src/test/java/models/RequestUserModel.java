@@ -1,7 +1,5 @@
 package models;
 
-import java.awt.*;
-
 public class RequestUserModel {
     private String first_name;
     private String last_name;
