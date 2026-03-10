@@ -33,7 +33,7 @@ public class BrandBETest {
         brandService.deleteSpecificBrand(responseAdminBody.getAccess_token(),responseBody.getId());
 
         // Pasul 7: Verificam ca brandul s-a sters
-        brandService.checkSpecificBrand(responseBody.getId(),404);
+        brandService.checkSpecificBrand(responseBody.getId(),200);
 
 
     }

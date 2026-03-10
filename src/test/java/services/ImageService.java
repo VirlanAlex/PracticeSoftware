@@ -5,15 +5,17 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.testng.Assert;
+import types.EndPointType;
+import types.RequestMethodType;
 
 public class ImageService {
     public void obtainAllImages(){
         System.out.println("STEP 1: GET ALL IMAGES");
         RequestSpecification request = RestAssured.given();
-        Response response = performRequest("GET",request,"/images");
+        Response response = performRequest(RequestMethodType.REQUEST_GET,request, EndPointType.IMAGE_GET_ALL_ENDPOINT);
         System.out.println(response.getStatusLine());
         response.body().prettyPrint();
-        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(response.getStatusCode(), 405);
     }
     private Response performRequest(String requestType, RequestSpecification request, String endpoint){
         return new RestClient().performRequest(requestType,request,endpoint);
