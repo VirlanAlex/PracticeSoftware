@@ -1,5 +1,7 @@
 package tests;
 
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import models.AddressModel;
 import models.RequestUserModel;
 import models.ResponseUserModel;
@@ -8,6 +10,8 @@ import pages.LoginPage;
 import services.UserService;
 import sharedData.SharedData;
 
+@Feature("@FEATURE - USER")
+@Story("@STORY - USER-123")
 public class UserBETest extends SharedData {
 
     @Test

@@ -1,14 +1,18 @@
 package tests;
 
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import models.*;
 import org.testng.annotations.Test;
 import services.UserService;
 import sharedData.SharedData;
 import types.ResponseStatusType;
 
+@Feature("@FEATURE - USER")
+@Story("@STORY - USER-321")
 public class UserLoginBETest extends SharedData {
 
-    @Test
+    @Test(description = "TC-111: User creation based on BE & login on FE")
     public void userTest() {
 
         // Pasul 1: Cream un nou user

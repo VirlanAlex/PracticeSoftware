@@ -1,11 +1,15 @@
 package tests;
 
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import models.*;
 import org.testng.annotations.Test;
 import services.BrandService;
 import services.UserService;
 import types.ResponseStatusType;
 
+@Feature("@FEATURE - BRAND")
+@Story("@STORY - BRAND")
 public class BrandBETest {
     @Test
     public void brandTest() {
