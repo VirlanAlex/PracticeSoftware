@@ -7,6 +7,7 @@ import io.restassured.specification.RequestSpecification;
 import org.testng.Assert;
 import types.EndPointType;
 import types.RequestMethodType;
+import types.ResponseStatusType;
 
 public class ReportService {
 
@@ -17,7 +18,7 @@ public class ReportService {
         Response response2 = performRequest(RequestMethodType.REQUEST_GET,request, EndPointType.REPORT_AVERAGE_SALES_ENDPOINT);
         System.out.println(response2.getStatusLine());
         response2.body().prettyPrint();
-        Assert.assertEquals(response2.getStatusCode(), 405);
+        Assert.assertEquals(response2.getStatusCode(), ResponseStatusType.RESPONSE_OK);
     }
     private Response performRequest(String requestType, RequestSpecification request, String endpoint) {
         return new RestClient().performRequest(requestType, request, endpoint);
