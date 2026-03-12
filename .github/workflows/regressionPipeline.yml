@@ -29,10 +29,14 @@ jobs:
       - name: Run automation tests
         run: mvn clean test
 
-      - name: Store Allure results
+      - name: Generate test results
+        if: always()
+        run: mvn allure:report
+
+      - name: Publish test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: allure-results
-          path: allure-results
-          if-no-files-found: warn
+          name: target-folder
+          path: target/allure-report
+
