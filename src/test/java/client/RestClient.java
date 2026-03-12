@@ -11,9 +11,9 @@ public class RestClient {
             case RequestMethodType.REQUEST_POST:
                 return prepareClient(request).post(endpoint);
             case RequestMethodType.REQUEST_GET:
-                return prepareClient(request).put(endpoint);
-            case RequestMethodType.REQUEST_PUT:
                 return prepareClient(request).get(endpoint);
+            case RequestMethodType.REQUEST_PUT:
+                return prepareClient(request).put(endpoint);
             case RequestMethodType.REQUEST_DELETE:
                 return prepareClient(request).delete(endpoint);
 

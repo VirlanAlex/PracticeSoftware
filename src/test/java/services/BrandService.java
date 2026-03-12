@@ -12,7 +12,7 @@ import types.RequestMethodType;
 import types.ResponseStatusType;
 import utils.LogUtility;
 
-public class BrandService {
+public class BrandService extends CommonService {
 
     public ResponseBrandModel createBrand(RequestBrandModel requestBody){
         LogUtility.infoLog("STEP 1: CREATE NEW BRAND");
@@ -21,7 +21,7 @@ public class BrandService {
 
         Response response = performRequest(RequestMethodType.REQUEST_POST,request, EndPointType.BRAND_CREATE_ENDPOINT);
         LogUtility.infoLog(response.getStatusLine());
-        response.body().prettyPrint();
+        LogUtility.infoLog(response.getBody().asPrettyString());
         Assert.assertEquals(response.getStatusCode(), ResponseStatusType.RESPONSE_CREATED);
         return response.getBody().as(ResponseBrandModel.class);
     }
@@ -30,10 +30,10 @@ public class BrandService {
         LogUtility.infoLog("STEP 2: CHECK BRAND REQUEST");
         RequestSpecification request = RestAssured.given();
 
-        Response response2 = performRequest(RequestMethodType.REQUEST_GET,request,EndPointType.BRAND_REQUEST_ENDPOINT+ brandId);
-        LogUtility.infoLog(response2.getStatusLine());
-        response2.body().prettyPrint();
-        Assert.assertEquals(response2.getStatusCode(), statusCode);
+        Response response = performRequest(RequestMethodType.REQUEST_GET,request,EndPointType.BRAND_REQUEST_ENDPOINT+ brandId);
+        LogUtility.infoLog(response.getStatusLine());
+        LogUtility.infoLog(response.getBody().asPrettyString());
+        Assert.assertEquals(response.getStatusCode(), statusCode);
     }
 
     public void modifySpecificBrand(RequestBrandModel requestBody, String brandId){
@@ -41,10 +41,10 @@ public class BrandService {
         RequestSpecification request = RestAssured.given();
         request.body(requestBody);
 
-        Response response3 = performRequest(RequestMethodType.REQUEST_PUT,request,EndPointType.BRAND_REQUEST_ENDPOINT+ brandId);
-        LogUtility.infoLog(response3.getStatusLine());
-        response3.body().prettyPrint();
-        Assert.assertEquals(response3.getStatusCode(), ResponseStatusType.RESPONSE_OK);
+        Response response = performRequest(RequestMethodType.REQUEST_PUT,request,EndPointType.BRAND_REQUEST_ENDPOINT+ brandId);
+        LogUtility.infoLog(response.getStatusLine());
+        LogUtility.infoLog(response.getBody().asPrettyString());
+        Assert.assertEquals(response.getStatusCode(), ResponseStatusType.RESPONSE_OK);
     }
 
     public void deleteSpecificBrand(String token, String brandId){
@@ -52,13 +52,11 @@ public class BrandService {
         RequestSpecification request = RestAssured.given();
         request.header("Authorization", "Bearer" + token);
 
-        Response response6 = performRequest(RequestMethodType.REQUEST_DELETE,request,EndPointType.BRAND_REQUEST_ENDPOINT+ brandId);
-        LogUtility.infoLog(response6.getStatusLine());
-        response6.body().prettyPrint();
-        Assert.assertEquals(response6.getStatusCode(), ResponseStatusType.RESPONSE_NO_CONTENT);
+        Response response = performRequest(RequestMethodType.REQUEST_DELETE,request,EndPointType.BRAND_REQUEST_ENDPOINT+ brandId);
+        LogUtility.infoLog(response.getStatusLine());
+        LogUtility.infoLog(response.getBody().asPrettyString());
+        Assert.assertEquals(response.getStatusCode(), ResponseStatusType.RESPONSE_NO_CONTENT);
     }
 
-    private Response performRequest(String requestType, RequestSpecification request, String endpoint) {
-        return new RestClient().performRequest(requestType, request, endpoint);
-    }
+
 }

@@ -11,7 +11,7 @@ import types.RequestMethodType;
 import types.ResponseStatusType;
 import utils.LogUtility;
 
-public class UserService {
+public class UserService extends CommonService{
 
     // Aceasta clasa reprezinta metodele de la serviciul User de pe Swagger
 
@@ -22,7 +22,7 @@ public class UserService {
 
         Response response = performRequest(RequestMethodType.REQUEST_POST,request, EndPointType.USER_CREATE_ENDPOINT);
         LogUtility.infoLog(response.getStatusLine());
-        response.body().prettyPrint();
+        LogUtility.infoLog(response.getBody().asPrettyString());
         Assert.assertEquals(response.getStatusCode(), ResponseStatusType.RESPONSE_CREATED);
         return response.getBody().as(ResponseUserModel.class);
     }
@@ -35,7 +35,7 @@ public class UserService {
 
         Response response = performRequest(RequestMethodType.REQUEST_POST,request,EndPointType.USER_LOGIN_ENDPOINT);
         LogUtility.infoLog(response.getStatusLine());
-        response.body().prettyPrint();
+        LogUtility.infoLog(response.getBody().asPrettyString());
         Assert.assertEquals(response.getStatusCode(), ResponseStatusType.RESPONSE_OK);
         return response.getBody().as(ResponseUserLoginModel.class);
     }
@@ -45,10 +45,10 @@ public class UserService {
         RequestSpecification request = RestAssured.given();
         request.header("Authorization", "Bearer "+ token);
 
-        Response response3 = performRequest(RequestMethodType.REQUEST_GET,request,EndPointType.USER_SPECIFIC_ENDPOINT+ userId);
-        LogUtility.infoLog(response3.getStatusLine());
-        response3.body().prettyPrint();
-        Assert.assertEquals(response3.getStatusCode(), statusCode);
+        Response response = performRequest(RequestMethodType.REQUEST_GET,request,EndPointType.USER_SPECIFIC_ENDPOINT+ userId);
+        LogUtility.infoLog(response.getStatusLine());
+        LogUtility.infoLog(response.getBody().asPrettyString());
+        Assert.assertEquals(response.getStatusCode(), statusCode);
     }
 
     public void logOutUser(String token){
@@ -56,10 +56,10 @@ public class UserService {
         RequestSpecification request = RestAssured.given();
         request.header("Authorization", "Bearer "+ token);
 
-        Response response4 = performRequest(RequestMethodType.REQUEST_GET,request,EndPointType.USER_LOGOUT_ENDPOINT);
-        LogUtility.infoLog(response4.getStatusLine());
-        response4.body().prettyPrint();
-        Assert.assertEquals(response4.getStatusCode(), ResponseStatusType.RESPONSE_OK);
+        Response response = performRequest(RequestMethodType.REQUEST_GET,request,EndPointType.USER_LOGOUT_ENDPOINT);
+        LogUtility.infoLog(response.getStatusLine());
+        LogUtility.infoLog(response.getBody().asPrettyString());
+        Assert.assertEquals(response.getStatusCode(), ResponseStatusType.RESPONSE_OK);
     }
 
     public ResponseUserLoginModel loginUser(RequestUserLoginModel requestBody){
@@ -69,7 +69,7 @@ public class UserService {
 
         Response response = performRequest(RequestMethodType.REQUEST_POST,request,EndPointType.USER_LOGIN_ENDPOINT);
         LogUtility.infoLog(response.getStatusLine());
-        response.body().prettyPrint();
+        LogUtility.infoLog(response.getBody().asPrettyString());
         Assert.assertEquals(response.getStatusCode(), ResponseStatusType.RESPONSE_OK);
         return response.getBody().as(ResponseUserLoginModel.class);
 
@@ -80,14 +80,10 @@ public class UserService {
         RequestSpecification request = RestAssured.given();
         request.header("Authorization", "Bearer "+ token);
 
-        Response response6 = performRequest(RequestMethodType.REQUEST_DELETE,request,EndPointType.USER_SPECIFIC_ENDPOINT+ userId);
-        LogUtility.infoLog(response6.getStatusLine());
-        response6.body().prettyPrint();
-        Assert.assertEquals(response6.getStatusCode(), ResponseStatusType.RESPONSE_NO_CONTENT);
+        Response response = performRequest(RequestMethodType.REQUEST_DELETE,request,EndPointType.USER_SPECIFIC_ENDPOINT+ userId);
+        LogUtility.infoLog(response.getStatusLine());
+        LogUtility.infoLog(response.getBody().asPrettyString());
+        Assert.assertEquals(response.getStatusCode(), ResponseStatusType.RESPONSE_NO_CONTENT);
     }
 
-    private Response performRequest(String requestType, RequestSpecification request, String endpoint){
-        return new RestClient().performRequest(requestType,request,endpoint);
-
-    }
 }
